@@ -26,7 +26,7 @@ if ($_SERVER["PHP_SELF"] == "/admin/config_backup.php") {
     <meta name="KeyWords" content="Pi-Star" />
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="pragma" content="no-cache" />
-<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
     <meta http-equiv="Expires" content="0" />
     <title>Pi-Star - <?php echo $lang['digital_voice']." ".$lang['dashboard']." - ".$lang['backup_restore'];?></title>
     <link rel="stylesheet" type="text/css" href="css/pistar-css.php" />
@@ -69,8 +69,9 @@ if ($_SERVER["PHP_SELF"] == "/admin/config_backup.php") {
 	  $output .= shell_exec("sudo cp /etc/dapnetgateway $backupDir 2>&1");
           $output .= shell_exec("sudo cp /etc/p25gateway $backupDir 2>&1");
           $output .= shell_exec("sudo cp /etc/ysfgateway $backupDir 2>&1");
-	  $output .= shell_exec("sudo cp /etc/nxdngateway $backupDir 2>&1");
 	  $output .= shell_exec("sudo cp /etc/ysf2dmr $backupDir 2>&1");
+	  $output .= shell_exec("sudo cp /etc/dgidgateway $backupDir 2>&1");
+	  $output .= shell_exec("sudo cp /etc/nxdngateway $backupDir 2>&1");
 	  $output .= shell_exec("sudo cp /etc/dmrgateway $backupDir 2>&1");
 	  $output .= shell_exec("sudo cp /etc/mobilegps $backupDir 2>&1");
           $output .= shell_exec("sudo cp /etc/starnetserver $backupDir 2>&1");
@@ -81,6 +82,7 @@ if ($_SERVER["PHP_SELF"] == "/admin/config_backup.php") {
 	  $output .= shell_exec("sudo cp /etc/hostname $backupDir 2>&1");
 	  $output .= shell_exec("sudo cp /etc/bmapi.key $backupDir 2>&1");
 	  $output .= shell_exec("sudo cp /etc/dapnetapi.key $backupDir 2>&1");
+	  $output .= shell_exec("sudo cp /etc/pistar-css.ini $backupDir 2>&1");
 	  $output .= shell_exec("sudo cp /usr/local/etc/RSSI.dat $backupDir 2>&1");
 	  $output .= shell_exec("sudo cp /var/www/dashboard/config/ircddblocal.php $backupDir 2>&1");
 	  $output .= shell_exec("sudo cp /var/www/dashboard/config/config.php $backupDir 2>&1");
@@ -96,7 +98,7 @@ if ($_SERVER["PHP_SELF"] == "/admin/config_backup.php") {
             $local_tz = new DateTimeZone(date_default_timezone_get ());
             $dt = new DateTime($utc_time, $utc_tz);
             $dt->setTimeZone($local_tz);
-            $local_time = $dt->format('d-M-Y');
+            $local_time = $dt->format('Y-M-d');
             header('Content-Description: File Transfer');
             header('Content-Type: application/octet-stream');
 	    if ($hostNameInfo != "pi-star") {

@@ -164,8 +164,12 @@ echo "<tr><th colspan=\"2\">".$lang['dstar_repeater']."</th></tr>\n";
 echo "<tr><th>RPT1</th><td style=\"background: #ffffff;\">".str_replace(' ', '&nbsp;', $configdstar['callsign'])."</td></tr>\n";
 echo "<tr><th>RPT2</th><td style=\"background: #ffffff;\">".str_replace(' ', '&nbsp;', $configdstar['gateway'])."</td></tr>\n";
 echo "<tr><th colspan=\"2\">".$lang['dstar_net']."</th></tr>\n";
-echo "<tr><th>APRS</th><td style=\"background: #ffffff;\">".substr($configs['aprsHostname'], 0, 16)."</td></tr>\n";
-echo "<tr><th>IRC</th><td style=\"background: #ffffff;\">".substr($configs['ircddbHostname'], 0 ,16)."</td></tr>\n";
+if ($configs['aprsEnabled']) {
+	echo "<tr><th>APRS</th><td style=\"background: #ffffff;\">".substr($configs['aprsHostname'], 0, 16)."</td></tr>\n";
+}
+if ($configs['ircddbEnabled']) {
+	echo "<tr><th>IRC</th><td style=\"background: #ffffff;\">".substr($configs['ircddbHostname'], 0 ,16)."</td></tr>\n";
+}
 echo "<tr><td colspan=\"2\" style=\"background: #ffffff;\">".getActualLink($reverseLogLinesMMDVM, "D-Star")."</td></tr>\n";
 echo "</table>\n";
 }
@@ -183,6 +187,7 @@ if ($dmrMasterHost == '127.0.0.1') {
 	$dmrMasterHost3 = str_replace('_', ' ', $configdmrgateway['DMR Network 3']['Name']);
 	if (isset($configdmrgateway['DMR Network 4']['Name'])) {$dmrMasterHost4 = str_replace('_', ' ', $configdmrgateway['DMR Network 4']['Name']);}
 	if (isset($configdmrgateway['DMR Network 5']['Name'])) {$dmrMasterHost5 = str_replace('_', ' ', $configdmrgateway['DMR Network 5']['Name']);}
+	if (isset($configdmrgateway['DMR Network 6']['Name'])) {$dmrMasterHost6 = str_replace('_', ' ', $configdmrgateway['DMR Network 6']['Name']);}
 	while (!feof($dmrMasterFile)) {
 		$dmrMasterLine = fgets($dmrMasterFile);
                 $dmrMasterHostF = preg_split('/\s+/', $dmrMasterLine);
@@ -198,6 +203,7 @@ if ($dmrMasterHost == '127.0.0.1') {
 	if (strlen($dmrMasterHost3) > 19) { $dmrMasterHost3 = substr($dmrMasterHost3, 0, 17) . '..'; }
 	if (isset($dmrMasterHost4)) { if (strlen($dmrMasterHost4) > 19) { $dmrMasterHost4 = substr($dmrMasterHost4, 0, 17) . '..'; } }
 	if (isset($dmrMasterHost5)) { if (strlen($dmrMasterHost5) > 19) { $dmrMasterHost5 = substr($dmrMasterHost5, 0, 17) . '..'; } }
+	if (isset($dmrMasterHost6)) { if (strlen($dmrMasterHost6) > 19) { $dmrMasterHost6 = substr($dmrMasterHost6, 0, 17) . '..'; } }
 }
 else {
 	while (!feof($dmrMasterFile)) {
@@ -227,11 +233,11 @@ if (getEnabled("DMR Network", $mmdvmconfigs) == 1) {
 				echo "<tr><td  style=\"background: #ffffff;\" colspan=\"2\">".$xlxMasterHost1."</td></tr>\n";
 			}
                         if ( !isset($configdmrgateway['XLX Network 1']['Enabled']) && isset($configdmrgateway['XLX Network']['Enabled']) && $configdmrgateway['XLX Network']['Enabled'] == 1) {
-				if (file_exists("/var/log/pi-star/DMRGateway-".gmdate("Y-m-d").".log")) { $xlxMasterHost1 = exec('grep \'XLX, Linking\|Unlinking\' /var/log/pi-star/DMRGateway-'.gmdate("Y-m-d").'.log | tail -1 | awk \'{print $5 " " $8 " " $9}\''); }
-                                else { $xlxMasterHost1 = exec('grep \'XLX, Linking\|Unlinking\' /var/log/pi-star/DMRGateway-'.gmdate("Y-m-d", time() - 86340).'.log | tail -1 | awk \'{print $5 " " $8 " " $9}\''); }
-				//$xlxMasterHost1 = exec('grep \'XLX, Linking\|Unlinking\' /var/log/pi-star/DMRGateway-'.gmdate("Y-m-d").'.log | tail -1 | awk \'{print $5 " " $8 " " $9}\'');
+				if (file_exists("/var/log/pi-star/DMRGateway-".gmdate("Y-m-d").".log")) { $xlxMasterHost1 = exec('grep \'XLX, Linking\|XLX, Unlinking\|XLX, Logged\' /var/log/pi-star/DMRGateway-'.gmdate("Y-m-d").'.log | tail -1 | awk \'{print $5 " " $8 " " $9}\''); }
+                                else { $xlxMasterHost1 = exec('grep \'XLX, Linking\|XLX, Unlinking\|XLX, Logged\' /var/log/pi-star/DMRGateway-'.gmdate("Y-m-d", time() - 86340).'.log | tail -1 | awk \'{print $5 " " $8 " " $9}\''); }
 				if ( strpos($xlxMasterHost1, 'Linking') !== false ) { $xlxMasterHost1 = str_replace('Linking ', '', $xlxMasterHost1); }
 				else if ( strpos($xlxMasterHost1, 'Unlinking') !== false ) { $xlxMasterHost1 = "XLX Not Linked"; }
+				else if ( strpos($xlxMasterHost1, 'Logged') !== false ) { $xlxMasterHost1 = "XLX Not Linked"; }
 				echo "<tr><td  style=\"background: #ffffff;\" colspan=\"2\">".$xlxMasterHost1."</td></tr>\n";
                         }
 			if ($configdmrgateway['DMR Network 1']['Enabled'] == 1) {
@@ -251,6 +257,11 @@ if (getEnabled("DMR Network", $mmdvmconfigs) == 1) {
 			if (isset($configdmrgateway['DMR Network 5']['Enabled'])) {
 				if ($configdmrgateway['DMR Network 5']['Enabled'] == 1) {
 					echo "<tr><td  style=\"background: #ffffff;\" colspan=\"2\">".$dmrMasterHost5."</td></tr>\n";
+				}
+			}
+			if (isset($configdmrgateway['DMR Network 6']['Enabled'])) {
+				if ($configdmrgateway['DMR Network 6']['Enabled'] == 1) {
+					echo "<tr><td  style=\"background: #ffffff;\" colspan=\"2\">".$dmrMasterHost6."</td></tr>\n";
 				}
 			}
 		}
@@ -282,7 +293,7 @@ if ( $testMMDVModeYSF == 1 || $testDMR2YSF ) { //Hide the YSF information when S
                                 break;
                         }
                 }
-                if ($ysfLinkedToTxt != "null") { $ysfLinkedToTxt = "Room: ".$ysfLinkedToTxt; } else { $ysfLinkedToTxt = "Linked to ".$ysfLinkedTo; }
+                if ($ysfLinkedToTxt != "null") { $ysfLinkedToTxt = $ysfLinkedToTxt; } else { $ysfLinkedToTxt = $ysfLinkedTo; }
                 $ysfLinkedToTxt = str_replace('_', ' ', $ysfLinkedToTxt);
         }
         if (strlen($ysfLinkedToTxt) > 19) { $ysfLinkedToTxt = substr($ysfLinkedToTxt, 0, 17) . '..'; }
@@ -344,7 +355,7 @@ if ( $testMMDVModeNXDN == 1 || isset($testYSF2NXDN) || isset($testDMR2NXDN) ) { 
 	if (file_exists('/etc/nxdngateway')) {
 		echo "<tr><td colspan=\"2\"style=\"background: #ffffff;\">".getActualLink($logLinesNXDNGateway, "NXDN")."</td></tr>\n";
 	} else {
-		echo "<tr><td colspan=\"2\"style=\"background: #ffffff;\">Linked to TG65000</td></tr>\n";
+		echo "<tr><td colspan=\"2\"style=\"background: #ffffff;\">TG 65000</td></tr>\n";
 	}
 	echo "</table>\n";
 }

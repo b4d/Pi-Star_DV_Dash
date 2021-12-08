@@ -15,10 +15,15 @@ setlocale(LC_ALL, "LC_CTYPE=en_GB.UTF-8;LC_NUMERIC=C;LC_TIME=C;LC_COLLATE=C;LC_M
 if ($_SERVER["PHP_SELF"] == "/admin/update.php") {
 
   if (!isset($_GET['ajax'])) {
+    if (!file_exists('/var/log/pi-star')) {
+      system('sudo mkdir -p /var/log/pi-star/');
+      system('sudo chmod 775 /var/log/pi-star/');
+      system('sudo chown root:mmdvm /var/log/pi-star/');
+    }
     system('sudo touch /var/log/pi-star/pi-star_update.log > /dev/null 2>&1 &');
     system('sudo echo "" > /var/log/pi-star/pi-star_update.log > /dev/null 2>&1 &');
     system('sudo /usr/local/sbin/pistar-update > /dev/null 2>&1 &');
-    }
+  }
 
   // Sanity Check Passed.
   header('Cache-Control: no-cache');
@@ -69,12 +74,12 @@ if ($_SERVER["PHP_SELF"] == "/admin/update.php") {
     <meta name="KeyWords" content="Pi-Star" />
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="pragma" content="no-cache" />
-<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
     <meta http-equiv="Expires" content="0" />
     <title>Pi-Star - <?php echo $lang['digital_voice']." ".$lang['dashboard']." - ".$lang['update'];?></title>
     <link rel="stylesheet" type="text/css" href="css/pistar-css.php" />
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.8.2.min.js"></script>
-    <script type="text/javascript" src="//creativecouple.github.com/jquery-timing/jquery-timing.min.js"></script>
+    <script type="text/javascript" src="/jquery.min.js"></script>
+    <script type="text/javascript" src="/jquery-timing.min.js"></script>
     <script type="text/javascript">
     $(function() {
       $.repeat(1000, function() {

@@ -87,12 +87,12 @@ function formatSize( $bytes ) {
     <meta name="KeyWords" content="Pi-Star" />
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="pragma" content="no-cache" />
-<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
     <meta http-equiv="Expires" content="0" />
     <title>Pi-Star - <?php echo $lang['digital_voice']." ".$lang['dashboard']." - ".$lang['update'];?></title>
     <link rel="stylesheet" type="text/css" href="css/pistar-css.php" />
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.8.2.min.js"></script>
-    <script type="text/javascript" src="//creativecouple.github.com/jquery-timing/jquery-timing.min.js"></script>
+    <script type="text/javascript" src="/jquery.min.js"></script>
+    <script type="text/javascript" src="/jquery-timing.min.js"></script>
     <style>  
     .progress .bar + .bar {
       -webkit-box-shadow: inset 1px 0 0 rgba(0, 0, 0, 0.15), inset 0 -1px 0 rgba(0, 0, 0, 0.15);
@@ -190,7 +190,7 @@ if (is_executable('/usr/local/bin/P25Gateway')) {
     echo "  <tr><td align=\"left\">P25Gateway</td><td align=\"left\">".$P25Gateway_Ver."</td></tr>\n";
 }
 if (is_executable('/usr/local/bin/NXDNGateway')) {
-    $NXDNGateway_Ver = exec('/usr/local/bin/YSFGateway -v | cut -d\' \' -f 3-');
+    $NXDNGateway_Ver = exec('/usr/local/bin/NXDNGateway -v | cut -d\' \' -f 3-');
     echo "  <tr><td align=\"left\">NXDNGateway</td><td align=\"left\">".$NXDNGateway_Ver."</td></tr>\n";
 }
 if (is_executable('/usr/local/bin/DAPNETGateway')) {
