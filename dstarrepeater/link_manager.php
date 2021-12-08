@@ -59,7 +59,7 @@ echo '<script type="text/javascript">setTimeout(function() { window.location=win
 
 else: ?>
 <b><?php echo $lang['d-star_link_manager'];?></b>
-<form action="http://<?php echo htmlentities($_SERVER['HTTP_HOST']).htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
+<form action="//<?php echo htmlentities($_SERVER['HTTP_HOST']).htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
 <table>
   <tr>
     <th width="150"><a class="tooltip" href="#">Radio Module<span><b>Radio Module</b></span></a></th>
@@ -102,8 +102,12 @@ echo "    <option value=\"customOption\">Text Entry</option>\n";
 
 while (!feof($dcsFile)) {
 	$dcsLine = fgets($dcsFile);
-	if (strpos($dcsLine, 'DCS') !== FALSE && strpos($dcsLine, '#') === FALSE)
+	if (strpos($dcsLine, 'DCS') !== FALSE && strpos($dcsLine, '#') === FALSE) {
 		echo "	<option value=\"".substr($dcsLine, 0, 6)."\">".substr($dcsLine, 0, 6)."</option>\n";
+	}
+	if (strpos($dcsLine, 'XLX') !== FALSE && strpos($dcsLine, '#') === FALSE) {
+		echo "	<option value=\"".substr($dcsLine, 0, 6)."\">".substr($dcsLine, 0, 6)."</option>\n";
+	}
 }
 fclose($dcsFile);
 

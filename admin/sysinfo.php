@@ -87,12 +87,12 @@ function formatSize( $bytes ) {
     <meta name="KeyWords" content="Pi-Star" />
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="pragma" content="no-cache" />
-<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
     <meta http-equiv="Expires" content="0" />
     <title>Pi-Star - <?php echo $lang['digital_voice']." ".$lang['dashboard']." - ".$lang['update'];?></title>
     <link rel="stylesheet" type="text/css" href="css/pistar-css.php" />
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
-    <script type="text/javascript" src="http://creativecouple.github.com/jquery-timing/jquery-timing.min.js"></script>
+    <script type="text/javascript" src="/jquery.min.js"></script>
+    <script type="text/javascript" src="/jquery-timing.min.js"></script>
     <style>  
     .progress .bar + .bar {
       -webkit-box-shadow: inset 1px 0 0 rgba(0, 0, 0, 0.15), inset 0 -1px 0 rgba(0, 0, 0, 0.15);
@@ -150,6 +150,52 @@ if (count($system['partitions']) > 0) {
             echo "  <b>Total:</b> ".formatSize($diskTotal)."<b> Used:</b> ".formatSize($diskUsed)."<b> Free:</b> ".formatSize($diskFree)."</td></tr>\n";
         }
     }
+}
+// Binary Information
+echo "  <tr><td><b>Binary</b></td><td><b>Version</b></td></tr>\n";
+if (is_executable('/usr/local/bin/MMDVMHost')) {
+    $MMDVMHost_Ver = exec('/usr/local/bin/MMDVMHost -v | cut -d\' \' -f 3-');
+    echo "  <tr><td align=\"left\">MMDVMHost</td><td align=\"left\">".$MMDVMHost_Ver."</td></tr>\n";
+}
+if (is_executable('/usr/local/bin/DMRGateway')) {
+    $DMRGateway_Ver = exec('/usr/local/bin/DMRGateway -v | cut -d\' \' -f 3-');
+    echo "  <tr><td align=\"left\">DMRGateway</td><td align=\"left\">".$DMRGateway_Ver."</td></tr>\n";
+}
+if (is_executable('/usr/local/bin/DMR2YSF')) {
+    $DMR2YSF_Ver = exec('/usr/local/bin/DMR2YSF -v | cut -d\' \' -f 3-');
+    echo "  <tr><td align=\"left\">DMR2YSF</td><td align=\"left\">".$DMR2YSF_Ver."</td></tr>\n";
+}
+if (is_executable('/usr/local/bin/DMR2NXDN')) {
+    $DMR2NXDN_Ver = exec('/usr/local/bin/DMR2NXDN -v | cut -d\' \' -f 3-');
+    echo "  <tr><td align=\"left\">DMR2NXDN</td><td align=\"left\">".$DMR2NXDN_Ver."</td></tr>\n";
+}
+if (is_executable('/usr/local/bin/YSFGateway')) {
+    $YSFGateway_Ver = exec('/usr/local/bin/YSFGateway -v | cut -d\' \' -f 3-');
+    echo "  <tr><td align=\"left\">YSFGateway</td><td align=\"left\">".$YSFGateway_Ver."</td></tr>\n";
+}
+if (is_executable('/usr/local/bin/YSF2DMR')) {
+    $YSF2DMR_Ver = exec('/usr/local/bin/YSF2DMR -v | cut -d\' \' -f 3-');
+    echo "  <tr><td align=\"left\">YSF2DMR</td><td align=\"left\">".$YSF2DMR_Ver."</td></tr>\n";
+}
+if (is_executable('/usr/local/bin/YSF2P25')) {
+    $YSF2P25_Ver = exec('/usr/local/bin/YSF2P25 -v | cut -d\' \' -f 3-');
+    echo "  <tr><td align=\"left\">YSF2P25</td><td align=\"left\">".$YSF2P25_Ver."</td></tr>\n";
+}
+if (is_executable('/usr/local/bin/YSF2NXDN')) {
+    $YSF2NXDN_Ver = exec('/usr/local/bin/YSF2NXDN -v | cut -d\' \' -f 3-');
+    echo "  <tr><td align=\"left\">YSF2NXDN</td><td align=\"left\">".$YSF2NXDN_Ver."</td></tr>\n";
+}
+if (is_executable('/usr/local/bin/P25Gateway')) {
+    $P25Gateway_Ver = exec('/usr/local/bin/P25Gateway -v | cut -d\' \' -f 3-');
+    echo "  <tr><td align=\"left\">P25Gateway</td><td align=\"left\">".$P25Gateway_Ver."</td></tr>\n";
+}
+if (is_executable('/usr/local/bin/NXDNGateway')) {
+    $NXDNGateway_Ver = exec('/usr/local/bin/NXDNGateway -v | cut -d\' \' -f 3-');
+    echo "  <tr><td align=\"left\">NXDNGateway</td><td align=\"left\">".$NXDNGateway_Ver."</td></tr>\n";
+}
+if (is_executable('/usr/local/bin/DAPNETGateway')) {
+    $DAPNETGateway_Ver = exec('/usr/local/bin/DAPNETGateway -v | cut -d\' \' -f 3-');
+    echo "  <tr><td align=\"left\">DAPNETGateway</td><td align=\"left\">".$DAPNETGateway_Ver."</td></tr>\n";
 }
 ?>
   </table>  

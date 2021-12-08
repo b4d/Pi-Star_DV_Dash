@@ -61,11 +61,13 @@ if($_POST) {
 			$content .= "[".$section."]\n";
 			//append the values
 			foreach($values as $key=>$value) {
-				if (($section == "DMR Network 1" || $section == "DMR Network 2") && $key == "Options" && $value) {
+				if (($section == "DMR Network 1" || $section == "DMR Network 2") && $key == "Password" && $value) {
 					$value = str_replace('"', "", $value);
 					$content .= $key."=\"".$value."\"\n";
-				}
-				else {
+				} elseif (($section == "DMR Network 1" || $section == "DMR Network 2") && $key == "Options" && $value) {
+					$value = str_replace('"', "", $value);
+					$content .= $key."=\"".$value."\"\n";
+				} else {
 					$content .= $key."=".$value."\n";
 				}
 			}
@@ -116,8 +118,6 @@ echo "</form>";
 
 <div class="footer">
 Pi-Star / Pi-Star Dashboard, &copy; Andy Taylor (MW0MWZ) 2014-<?php echo date("Y"); ?>.<br />
-ircDDBGateway Dashboard by Hans-J. Barthen (DL5DI),<br />
-MMDVMDash developed by Kim Huebel (DG9VH), <br />
 Need help? Click <a style="color: #ffffff;" href="https://www.facebook.com/groups/pistarusergroup/" target="_new">here for the Support Group</a><br />
 Get your copy of Pi-Star from <a style="color: #ffffff;" href="http://www.pistar.uk/downloads/" target="_new">here</a>.<br />
 </div>

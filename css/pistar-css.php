@@ -39,6 +39,13 @@ if (file_exists('/etc/pistar-css.ini')) {
     width: 820px;
     text-align: left;
     margin: auto;
+    border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px; 
+    -khtml-border-radius: 10px 10px 10px 10px;
+    -ms-border-radius: 10px 10px 10px 10px;
+    box-shadow: 3px 3px 3px #707070;
+    background : #<?php echo $backgroundContent; ?>;
 }
 
 body, font {
@@ -53,7 +60,11 @@ body, font {
     font-family : verdana, arial, sans-serif;
     text-align : left;
     padding : 5px 0px 5px 0px;
-    border-radius : 10px 10px 0 0;
+    border-radius: 10px 10px 0 0;
+    -moz-border-radius: 10px 10px 0px 0px;
+    -webkit-border-radius: 10px 10px 0px 0px; 
+    -khtml-border-radius: 10px 10px 0px 0px;
+    -ms-border-radius: 10px 10px 0px 0px;
  }
 
 .nav {
@@ -81,6 +92,16 @@ body, font {
     text-align: center;
 }
 
+.contentwide h2 {
+    color: #<?php echo $textContent; ?>;
+    font: 1em verdana,arial,sans-serif;
+    text-align: center;
+    font-weight: bold;
+    padding: 0px;
+    margin: 0px;
+}
+
+
 .footer {
     background : #<?php echo $backgroundBanners; ?>;
     text-decoration : none;
@@ -89,7 +110,11 @@ body, font {
     font-size : 9px;
     text-align : center;
     padding : 10px 0 10px 0;
-    border-radius : 0 0 10px 10px;
+    border-radius: 0 0 10px 10px;
+    -moz-border-radius: 0px 0px 10px 10px;
+    -webkit-border-radius: 0px 0px 10px 10px; 
+    -khtml-border-radius: 0px 0px 10px 10px;
+    -ms-border-radius: 0px 0px 10px 10px;
     clear : both;
 }
 
@@ -368,3 +393,33 @@ input.toggle-round-flat:checked + label:after {
     margin-left: 14px;
     background-color: #<?php echo $backgroundBanners; ?>;
 }
+
+/* Tame Firefox Buttons */
+@-moz-document url-prefix() {
+    select,
+    input {
+        margin : 0;
+        padding : 0;
+        border-width : 1px;
+        font : 12px verdana,arial,sans-serif;
+    }
+    input[type="button"], button, input[type="submit"] {
+        padding : 0px 3px 0px 3px;
+        border-radius : 3px 3px 3px 3px;
+        -moz-border-radius : 3px 3px 3px 3px;
+    }
+}
+
+/* Aria CSS Here
+[role="checkbox"] {
+    padding:5px;
+}
+
+[aria-checked="true"]::before {
+    content: "[x]";
+}
+
+[aria-checked="false"]::before {
+    content: "[ ]";
+}
+*/

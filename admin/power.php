@@ -27,7 +27,7 @@ if ($_SERVER["PHP_SELF"] == "/admin/power.php") {
     <meta name="KeyWords" content="Pi-Star" />
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="pragma" content="no-cache" />
-<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
     <meta http-equiv="Expires" content="0" />
     <title>Pi-Star - <?php echo $lang['digital_voice']." ".$lang['dashboard']." - ".$lang['power'];?></title>
     <link rel="stylesheet" type="text/css" href="css/pistar-css.php" />
@@ -52,26 +52,26 @@ if ($_SERVER["PHP_SELF"] == "/admin/power.php") {
   <?php
         if ( escapeshellcmd($_POST["action"]) == "reboot" ) {
                 echo '<tr><td colspan="2" style="background: #000000; color: #00ff00;"><br /><br />Reboot command has been sent to your Pi,
-                        <br />please wait 50 secs for it to reboot.<br />
+                        <br />please wait up to 90 secs for it to reboot.<br />
                         <br />You will be re-directed back to the
-                        <br />dashboard automatically in 50 seconds.<br /><br /><br />
+                        <br />dashboard automatically in 90 seconds.<br /><br /><br />
                         <script language="JavaScript" type="text/javascript">
-                                setTimeout("location.href = \'/index.php\'",50000);
+                                setTimeout("location.href = \'/index.php\'",90000);
                         </script>
                         </td></tr>';
-                system('sudo mount -o remount,ro / > /dev/null &');
-                exec('sleep 5 && sudo shutdown -r now > /dev/null &');
+                system('sudo sync && sudo sync && sudo sync && sudo mount -o remount,ro / > /dev/null &');
+                exec('sudo reboot > /dev/null &');
                 };
         if ( escapeshellcmd($_POST["action"]) == "shutdown" ) {
                 echo '<tr><td colspan="2" style="background: #000000; color: #00ff00;"><br /><br />Shutdown command has been sent to your Pi,
                         <br /> please wait 30 secs for it to fully shutdown<br />before removing the power.<br /><br /><br /></td></tr>';
-                system('sudo mount -o remount,ro / > /dev/null &');
-                exec('sleep 5 && sudo shutdown -h now > /dev/null &');
+                system('sudo sync && sudo sync && sudo sync && sudo mount -o remount,ro / > /dev/null &');
+                exec('sudo shutdown -h now > /dev/null &');
                 };
   ?>
   </table>
 <?php } else { ?>
-  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" onsubmit="return confirm('Are you sure?');">
   <table width="100%">
   <tr>
     <th colspan="2"><?php echo $lang['power'];?></th>

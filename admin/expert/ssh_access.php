@@ -33,8 +33,8 @@ if ($_SERVER["PHP_SELF"] == "/admin/expert/ssh_access.php") {
     <meta http-equiv="Expires" content="0" />
     <title>Pi-Star - <?php echo $lang['digital_voice']." ".$lang['dashboard']." - SSH";?></title>
     <link rel="stylesheet" type="text/css" href="../css/pistar-css.php" />
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
-    <script type="text/javascript" src="http://creativecouple.github.com/jquery-timing/jquery-timing.min.js"></script>
+    <script type="text/javascript" src="/jquery.min.js"></script>
+    <script type="text/javascript" src="/jquery-timing.min.js"></script>
   </head>
   <body>
   <div class="container">
@@ -51,7 +51,7 @@ if ($_SERVER["PHP_SELF"] == "/admin/expert/ssh_access.php") {
     } ?>
   </div></td></tr>
   </table>
-  <?php if (isset($shellPort)) { echo "<a href=\"http://".$_SERVER['HTTP_HOST'].":".$shellPort."\">Click here for fullscreen SSH client</a><br />\n"; } ?>
+  <?php if (isset($shellPort)) { echo "<a href=\"//".$_SERVER['HTTP_HOST'].":".$shellPort."\">Click here for fullscreen SSH client</a><br />\n"; } ?>
   </div>
   <div class="footer">
   Pi-Star web config, &copy; Andy Taylor (MW0MWZ) 2014-<?php echo date("Y"); ?>.<br />

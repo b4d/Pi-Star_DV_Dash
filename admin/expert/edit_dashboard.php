@@ -49,8 +49,9 @@ if (!file_exists('/etc/pistar-css.ini')) {
 	$fileContent .= "[Text]\nBanners=ffffff\nBannersDrop=303030\n\n";
 	$fileContent .= "[Tables]\nHeadDrop=8b0000\nBgEven=f7f7f7\nBgOdd=d0d0d0\n\n";
 	$fileContent .= "[Content]\nText=000000\n\n";
-	$fileContent .= "[BannerH2]\nEnabled=0\nText=Some Text\n\n";
-	$fileContent .= "[BannerExtText]\nEnabled=0\nText=Some long text entry\n";
+	$fileContent .= "[BannerH1]\nEnabled=0\nText=\"Some Text\"\n\n";
+	$fileContent .= "[BannerExtText]\nEnabled=0\nText=\"Some long text entry\"\n";
+	$fileContent .= "[Lookup]\nService=\"RadioID\"\n";
 	fwrite($outFile, $fileContent);
 	fclose($outFile);
 	
@@ -104,6 +105,7 @@ if($_POST) {
 		foreach($data as $section=>$values) {
 			// UnBreak special cases
 			$section = str_replace("_", " ", $section);
+			$section = str_replace("BannerH2", "BannerH1", $section);
 			$content .= "[".$section."]\n";
 			//append the values
 			foreach($values as $key=>$value) {
@@ -137,6 +139,8 @@ if($_POST) {
 
 //parse the ini file using default parse_ini_file() PHP function
 $parsed_ini = parse_ini_file($filepath, true);
+if (isset($parsed_ini['Lookup']['popupWidth']))  { unset($parsed_ini['Lookup']['popupWidth']); }
+if (isset($parsed_ini['Lookup']['popupHeight'])) { unset($parsed_ini['Lookup']['popupHeight']); }
 
 echo '<form action="" method="post">'."\n";
 	foreach($parsed_ini as $section=>$values) {
@@ -151,11 +155,11 @@ echo '<form action="" method="post">'."\n";
 		}
 		echo "</table>\n";
 		echo '<input type="submit" value="'.$lang['apply'].'" />'."\n";
-		echo "<br />\n";
+		echo "<br /><br />\n";
 	}
 echo "</form>";
-echo "<br /><br />\n";
-echo 'if you took it all too far and now it makes you feel sick, click below to reset.'."\n";
+echo "<br />\n";
+echo 'if you took it all too far and now it makes you feel sick, click below to reset the changes made on this page, this will ONLY reset the CSS settings above and will not change any other settings or configuration.'."\n";
 echo '<form id="factoryReset" action="" method="post">'."\n";
 echo '  <div><input type="hidden" name="factoryReset" value="1" /></div>'."\n";
 echo '</form>'."\n";
@@ -165,8 +169,6 @@ echo '<input type="button" onclick="javascript:factoryReset();" value="'.$lang['
 
 <div class="footer">
 Pi-Star / Pi-Star Dashboard, &copy; Andy Taylor (MW0MWZ) 2014-<?php echo date("Y"); ?>.<br />
-ircDDBGateway Dashboard by Hans-J. Barthen (DL5DI),<br />
-MMDVMDash developed by Kim Huebel (DG9VH), <br />
 Need help? Click <a style="color: #ffffff;" href="https://www.facebook.com/groups/pistarusergroup/" target="_new">here for the Support Group</a><br />
 Get your copy of Pi-Star from <a style="color: #ffffff;" href="http://www.pistar.uk/downloads/" target="_new">here</a>.<br />
 </div>

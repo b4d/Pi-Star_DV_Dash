@@ -1,7 +1,7 @@
 <?php
 //
 // Spanish ES Language Pack
-// Blas Cantero/Francisco Jimenez EA1JM
+// Blas Cantero, EA7GIB / Francisco Jimenez-Martin, EA1JM
 // 27-Sept-2017
 //
 $lang = array (
@@ -28,6 +28,7 @@ $lang = array (
   "p25_config"                  =>  "Configuracion de P25",
   "nxdn_config"                 =>  "Configuracion de NXDN",
   "pocsag_config"               =>  "Configuracion de POCSAG",
+  "mobilegps_config"            =>  "Mobile GPS Configuration",
   "wifi_config"                 =>  "Configuracion WIFI",
   "fw_config"                   =>  "Configuracion del cortafuegos",
   "remote_access_pw"            =>  "Contraseña accceso Remoto",
@@ -72,7 +73,7 @@ $lang = array (
   "dmr_plus_master"             =>  "Master de DMR+",
   "dmr_plus_network"            =>  "Red de DMR+",
   "xlx_master"                  =>  "Master de XLX",
-  "xlx_enable"                  =>  "habilitar Master XLX",
+  "xlx_enable"                  =>  "Habilitar Master XLX",
   "dmr_cc"                      =>  "Codigo de color de DMR",
   "dmr_embeddedlconly"          =>  "DMR EmbeddedLCOnly",
   "dmr_dumptadata"              =>  "DMR DumpTAData",
@@ -85,13 +86,17 @@ $lang = array (
   "dstar_irc_lang"              =>  "Idioma de ircDDBGateway",
   "dstar_irc_time"              =>  "Intervalo de Balizas",
   // Config Page - YSF Configuration
-  "ysf_startup_host"            =>  "YSF Lanzamiento Host",
+  "ysf_startup_host"            =>  "Servidor de Inicio YSF",
   // Config Page - P25 Configuration
-  "p25_startup_host"            =>  "P25 Lanzamiento Host",
+  "p25_startup_host"            =>  "Servidor de Inicio P25",
   "p25_nac"                     =>  "P25 NAC",
   // Config Page - NXDN Configuration
-  "nxdn_startup_host"           =>  "NXDN Lanzamiento Host",
+  "nxdn_startup_host"           =>  "Servidor de Inicio NXDN",
   "nxdn_ran"                    =>  "NXDN RAN",
+  // Config Page - MobileGPS Configuration
+  "mobilegps_enable"            =>  "MobileGPS Enable",
+  "mobilegps_port"              =>  "GPS Port",
+  "mobilegps_speed"             =>  "GPS Port Speed",
   // Config Page - Firewall Configuration
   "fw_dash"                     =>  "Tablero de acceso",
   "fw_irc"                      =>  "ircDDBGateway Remoto",
@@ -124,9 +129,9 @@ $lang = array (
   "loss"                        =>  "Perdida",
   "ber"                         =>  "BER",        //version corta de "Error de bit"
   // POCSAG Specific
-  "pocsag_list"                 =>  "DAPNET Gateway Activity",
-  "pocsag_timeslot"             =>  "Time Slot",
-  "pocsag_msg"                  =>  "Message",
+  "pocsag_list"                 =>  "Actividad de DAPNET Gateway",
+  "pocsag_timeslot"             =>  "Slot de Tiempo",
+  "pocsag_msg"                  =>  "Mensaje",
   // Dashboard - Extra Info
   "group"                       =>  "Grupos",
   "logoff"                      =>  "Finalizar",
