@@ -14,7 +14,8 @@ if ($configfile = fopen($gatewayConfigPath,'r')) {
 }
 $progname = basename($_SERVER['SCRIPT_FILENAME'],".php");
 $rev=$version;
-$MYCALL=strtoupper($callsign);
+//$MYCALL=strtoupper($callsign);
+$MYCALL=strtoupper($configs['gatewayCallsign']);
 
 // Check if the config file exists
 if (file_exists('/etc/pistar-css.ini')) {
@@ -50,6 +51,7 @@ $configPistarRelease = parse_ini_file($pistarReleaseConfig, true);
     <meta http-equiv="expires" content="0" />
     <meta http-equiv="pragma" content="no-cache" />
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="css/nice-select.min.css?ver=<?php echo $configPistarRelease['Pi-Star']['Version']; ?>" />
     <title><?php echo "$MYCALL"." - ".$lang['digital_voice']." ".$lang['dashboard'];?></title>
 <?php include_once "config/browserdetect.php"; ?>
     <script type="text/javascript" src="/jquery.min.js"></script>
@@ -60,7 +62,7 @@ $configPistarRelease = parse_ini_file($pistarReleaseConfig, true);
 </head>
 <body>
 <?php
-if ( ($_SERVER["PHP_SELF"] == "/admin/index.php") && ($configPistarRelease['Pi-Star']['Version'] < 4.1) && ($configPistarRelease['Pi-Star']['Hardware'] == "RPi") ) {
+if ( ($_SERVER["PHP_SELF"] == "/admin/index.php") && version_compare($configPistarRelease['Pi-Star']['Version'], "4.1", "<") && ($configPistarRelease['Pi-Star']['Hardware'] == "RPi") ) {
 ?>
 <div>
   <table align="center" width="760px" style="margin: 0px 0px 10px 0px; width: 100%;">
@@ -71,7 +73,27 @@ if ( ($_SERVER["PHP_SELF"] == "/admin/index.php") && ($configPistarRelease['Pi-S
   </table>
 </div>
 <?php }
-if ( ($_SERVER["PHP_SELF"] == "/admin/index.php") && ($configPistarRelease['Pi-Star']['Version'] >= "4.1") && ($configPistarRelease['Pi-Star']['Version'] < "4.1.5") ) {
+if ( ($_SERVER["PHP_SELF"] == "/admin/index.php") && version_compare($configPistarRelease['Pi-Star']['Version'], "4.1.0", ">=") && version_compare($configPistarRelease['Pi-Star']['Version'], "4.1.10", "<") ) {
+?>
+<div>
+  <table align="center" width="760px" style="margin: 0px 0px 10px 0px; width: 100%;">
+    <tr>
+    <td align="center" valign="top" style="background-color: #ffff90; color: #906000;">Alert: An upgrade to Pi-Star has been released, click here to upgrade now: <a href="/admin/expert/upgrade.php" alt="Upgrade Pi-Star">Upgrade Pi-Star</a>.</td>
+    </tr>
+  </table>
+</div>
+<?php }
+if ( ($_SERVER["PHP_SELF"] == "/admin/index.php") && version_compare($configPistarRelease['Pi-Star']['Version'], "4.2.0", ">=") && version_compare($configPistarRelease['Pi-Star']['Version'], "4.2.3", "<") ) {
+?>
+<div>
+  <table align="center" width="760px" style="margin: 0px 0px 10px 0px; width: 100%;">
+    <tr>
+    <td align="center" valign="top" style="background-color: #ffff90; color: #906000;">Alert: An upgrade to Pi-Star has been released, click here to upgrade now: <a href="/admin/expert/upgrade.php" alt="Upgrade Pi-Star">Upgrade Pi-Star</a>.</td>
+    </tr>
+  </table>
+</div>
+<?php }
+if ( ($_SERVER["PHP_SELF"] == "/admin/index.php") && version_compare($configPistarRelease['Pi-Star']['Version'], "4.3.0", ">=") && version_compare($configPistarRelease['Pi-Star']['Version'], "4.3.4", "<") ) {
 ?>
 <div>
   <table align="center" width="760px" style="margin: 0px 0px 10px 0px; width: 100%;">
@@ -183,9 +205,9 @@ if (file_exists('/etc/dstar-radio.mmdvmhost')) {
 	if ($_SERVER["PHP_SELF"] == "/admin/index.php") { 		// Admin Only Option
 		echo '<script type="text/javascript">'."\n";
         	echo 'function reloadbmConnections(){'."\n";
-        	echo '  $("#bmConnects").load("/mmdvmhost/bm_links.php",function(){ setTimeout(reloadbmConnections,30000) });'."\n";
+        	echo '  $("#bmConnects").load("/mmdvmhost/bm_links.php",function(){ setTimeout(reloadbmConnections,180000) });'."\n";
         	echo '}'."\n";
-        	echo 'setTimeout(reloadbmConnections,30000);'."\n";
+        	echo 'setTimeout(reloadbmConnections,180000);'."\n";
 		echo '$(window).trigger(\'resize\');'."\n";
         	echo '</script>'."\n";
         	echo '<div id="bmConnects">'."\n";
@@ -226,6 +248,12 @@ if (file_exists('/etc/dstar-radio.mmdvmhost')) {
         if ( $testMMDVModeNXDNnet == 1 ) {				// If NXDN network is enabled, add these extra features.
 		if ($_SERVER["PHP_SELF"] == "/admin/index.php") { 	// Admin Only Option
 			include 'mmdvmhost/nxdn_manager.php';		// NXDN Links
+		}
+	}
+	$testMMDVModeM17net = getConfigItem("M17 Network", "Enable", $mmdvmconfigs);
+        if ( $testMMDVModeM17net == 1 ) {				// If NXDN network is enabled, add these extra features.
+		if ($_SERVER["PHP_SELF"] == "/admin/index.php") { 	// Admin Only Option
+			include 'mmdvmhost/m17_manager.php';		// M17 Links
 		}
 	}
 	echo '<script type="text/javascript">'."\n";
@@ -339,4 +367,17 @@ Get your copy of Pi-Star from <a style="color: #ffffff;" href="http://www.pistar
 
 </div>
 </body>
+<script type="text/javascript" src="/nice-select.min.js"></script>
+<script type="text/javascript">
+    var selectize = document.querySelectorAll('select')
+    var options = {searchable: true};
+    selectize.forEach(function(select){
+        if( select.length > 30 && null === select.onchange ) {
+            select.classList.add("small", "selectize");
+            tabletd = select.closest('td');
+            tabletd.style.cssText = 'overflow-x:unset';
+            NiceSelect.bind(select, options);
+        }
+    });
+</script>
 </html>
